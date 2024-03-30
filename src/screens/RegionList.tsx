@@ -1,35 +1,31 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "react-native";
 import { appStyles } from "../styles/main";
 import { PrimaryButton } from "../components/buttons";
+import { Screen } from "../constants";
 
 export const RegionList: React.FC = () => {
+  const { navigate } = useNavigation();
+
   return (
     <View style={appStyles.container}>
       <Text>Region List Page</Text>
       <PrimaryButton
         text="Eastern"
-        onPress={() => {
-          console.log("Viewing Eastern customers");
-        }}
+        onPress={() => navigate(Screen.CustomerList)}
       />
       <PrimaryButton
         text="Central"
-        onPress={() => {
-          console.log("Viewing Central customers");
-        }}
+        onPress={() => navigate(Screen.CustomerList)}
       />
       <PrimaryButton
         text="Mountain"
-        onPress={() => {
-          console.log("Viewing Mountain customers");
-        }}
+        onPress={() => navigate(Screen.CustomerList)}
       />
       <PrimaryButton
         text="Pacific"
-        onPress={() => {
-          console.log("Viewing Pacific customers");
-        }}
+        onPress={() => navigate(Screen.CustomerList)}
       />
     </View>
   );
