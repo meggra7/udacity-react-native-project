@@ -1,21 +1,8 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react'
+import { Welcome } from './src/screens/Welcome';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>This is the beginning of my CRM app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Welcome />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
