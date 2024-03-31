@@ -2,13 +2,13 @@ import React from "react";
 import { Pressable, Text } from "react-native";
 import { appStyles } from "../styles/main";
 
-interface PrimaryButtonProps {
+interface ButtonProps {
   text: string;
   onPress: () => void;
   onLongPress?: () => void;
 }
 
-export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+export const PrimaryButton: React.FC<ButtonProps> = ({
   text,
   onPress,
   onLongPress,
@@ -24,13 +24,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   );
 };
 
-interface SecondaryButtonProps {
-  text: string;
-  onPress: () => void;
-  onLongPress?: () => void;
-}
-
-export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
+export const SecondaryButton: React.FC<ButtonProps> = ({
   text,
   onPress,
   onLongPress,
