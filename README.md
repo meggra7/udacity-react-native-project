@@ -47,30 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Design region list screen
-
-#### Description
-
-Fully lay out the region list screen and implement any existing global styles, as well as add any new styles required.
-
-#### Acceptance criteria
-
-- The region list screen should be fully designed, and navigation should continue to work as expected.
-
-### Design customer list screen
-
-#### Description
-
-Fully lay out the customer list screen and implement any existing global styles, as well as add any new styles required.
-
-#### Acceptance criteria
-
-- The customer list screen should be fully designed, and navigation should continue to work as expected.
-- There should be components for the screen as a whole, and for the individual customer list items.
-- The list should display mock customer data, which may be hardcoded into the component, for now.
-- Although it won't be visible while we use hard-coded mock data, also create an empty state component that should display if no customers have been added yet.
-- The empty state component should contain a button that adds navigation to the add customer screen.
-
 ### Design view customer screen
 
 #### Description
