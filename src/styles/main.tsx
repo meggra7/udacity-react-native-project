@@ -6,6 +6,7 @@ export const appStyles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    padding: 24,
   },
   primaryButton: {
     alignItems: "center",
