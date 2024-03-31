@@ -10,7 +10,9 @@ export const RegionList: React.FC = () => {
 
   return (
     <View style={appStyles.container}>
-      <Text>Region List Page</Text>
+      <Text style={{ marginBottom: 8 }}>
+        Select a region below to view customers for that region
+      </Text>
       <PrimaryButton
         text="Eastern"
         onPress={() => navigate(Screen.CustomerList)}
