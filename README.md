@@ -47,31 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Initialize project
-
-#### Description
-
-Create a new Expo project.
-
-#### Acceptance criteria
-
-- A blank Expo app should be able to be launched on both iOS and Android.
-
-### Create navigation skeleton
-
-#### Description
-
-Create starter screen files for all of the required screens, and connect them using stack navigation and buttons.
-
-#### Acceptance criteria
-
-- The **welcome screen** should be the entry point for the app, which will include two buttons:
-  - View customers by region > opens region list
-  - Add new customer > opens **add customer** (no further navigation after adding customer, for now)
-- The **region list** screen should include four buttons to represent the four customer regions: Eastern, Central, Mountain, Pacific. All four should open the customer list.
-- The **customer list** should include a single button as a placeholder to represent opening the view customer screen
-- The **view customer** screen should include a button to open the **edit customer screen** (no further navigation after editing customer, for now)
-
 ### Design welcome screen and stylesheet
 
 #### Description
