@@ -13,7 +13,6 @@ export const Welcome: React.FC = () => {
       style={{
         ...appStyles.container,
         justifyContent: "space-between",
-        padding: 24,
       }}
     >
       <View
