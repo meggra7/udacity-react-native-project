@@ -47,18 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Design welcome screen and stylesheet
-
-#### Description
-
-Fully lay out the welcome screen and start implementing styles that can be used throughout the app.
-
-#### Acceptance criteria
-
-- The welcome screen should be fully designed, and navigation should continue to work as expected.
-- Global styles should be created.
-- An option to clear all data should be included (should not navigate).
-
 ### Design region list screen
 
 #### Description
