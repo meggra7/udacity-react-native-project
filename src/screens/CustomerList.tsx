@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { appStyles } from "../styles/main";
+import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton } from "../components/buttons";
 import { Screen } from "../constants";
 
@@ -48,7 +48,7 @@ export const CustomerList: React.FC = () => {
     return (
       <Pressable
         style={{
-          borderColor: "#e79c9f",
+          borderColor: AppColor.PrimaryLight,
           borderWidth: 1,
           width: "100%",
           padding: 16,
