@@ -47,16 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Design view customer screen
-
-#### Description
-
-Fully lay out the view customer screen and implement any existing global styles, as well as add any new styles required.
-
-#### Acceptance criteria
-
-- The view customer screen should be fully designed, and navigation should continue to work as expected.
-
 ### Design add customer screen
 
 #### Description

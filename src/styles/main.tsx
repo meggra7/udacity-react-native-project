@@ -1,5 +1,11 @@
 import { StyleSheet } from "react-native";
 
+export enum AppColor {
+  Primary = "#AC2B2B",
+  PrimaryLight = "#e79c9f",
+  Accent = "#2bacac",
+}
+
 export const appStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -13,7 +19,7 @@ export const appStyles = StyleSheet.create({
     justifyContent: "center",
     padding: 6,
     margin: 6,
-    backgroundColor: "#AC2B2B",
+    backgroundColor: AppColor.Primary,
   },
   primaryButtonText: {
     color: "#FFFFFF",
@@ -25,11 +31,11 @@ export const appStyles = StyleSheet.create({
     padding: 6,
     margin: 6,
     backgroundColor: "#FFFFFF",
-    borderColor: "#AC2B2B",
+    borderColor: AppColor.Primary,
     borderWidth: 2,
   },
   secondaryButtonText: {
-    color: "#AC2B2B",
+    color: AppColor.Primary,
     textTransform: "uppercase",
   },
 });
