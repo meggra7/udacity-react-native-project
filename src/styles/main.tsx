@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export enum AppColor {
-  Primary = "#AC2B2B",
-  PrimaryLight = "#e79c9f",
-  Accent = "#2bacac",
+  Primary = "#2BACAC",
+  PrimaryLight = "#ddf0f1",
+  Danger = "#ac2b2b",
 }
 
 export const appStyles = StyleSheet.create({

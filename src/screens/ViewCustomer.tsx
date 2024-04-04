@@ -34,7 +34,7 @@ export const ViewCustomer: React.FC = () => {
       gap: 8,
     },
     actionText: {
-      color: AppColor.Accent,
+      color: AppColor.Primary,
     },
   });
 
@@ -68,14 +68,14 @@ export const ViewCustomer: React.FC = () => {
           style={viewCustomerStyles.actionContainer}
           onPress={() => navigate(Screen.EditCustomer)}
         >
-          <Feather name="edit" size={32} color={AppColor.Accent} />
+          <Feather name="edit" size={32} color={AppColor.Primary} />
           <Text style={viewCustomerStyles.actionText}>Edit customer</Text>
         </Pressable>
         <Pressable
           style={viewCustomerStyles.actionContainer}
           onPress={() => console.log("Send local push notification")}
         >
-          <Ionicons name="notifications" size={32} color={AppColor.Accent} />
+          <Ionicons name="notifications" size={32} color={AppColor.Primary} />
           <Text style={viewCustomerStyles.actionText}>
             Set communication reminder
           </Text>
