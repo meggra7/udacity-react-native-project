@@ -38,4 +38,18 @@ export const appStyles = StyleSheet.create({
     color: AppColor.Primary,
     textTransform: "uppercase",
   },
+  dangerousButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 6,
+    margin: 6,
+    backgroundColor: "#FFFFFF",
+    borderColor: AppColor.Danger,
+    borderWidth: 2,
+  },
+  dangerousButtonText: {
+    color: AppColor.Danger,
+    textTransform: "uppercase",
+    fontWeight: "bold",
+  },
 });

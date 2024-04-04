@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "react-native";
 import { appStyles } from "../styles/main";
-import { PrimaryButton, SecondaryButton } from "../components/buttons";
+import { PrimaryButton, DangerousButton } from "../components/buttons";
 import { Screen } from "../constants";
 
 export const Welcome: React.FC = () => {
@@ -36,10 +36,10 @@ export const Welcome: React.FC = () => {
         />
       </View>
 
-      <SecondaryButton
+      <DangerousButton
         text="Clear all customer data"
         onPress={() => console.log("Clearing all customer data")}
-      ></SecondaryButton>
+      />
     </View>
   );
 };
