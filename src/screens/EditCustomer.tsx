@@ -1,24 +1,22 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { appStyles } from "../styles/main";
-import { PrimaryButton } from "../components/buttons";
+import { CustomerDataForm } from "../components/customerDataForm";
 
 export const EditCustomer: React.FC = () => {
+  // TODO replace with data from Redux once implemented
+  const dummyCustomer = {
+    firstName: "Jane",
+    lastName: "Doe",
+    region: 3, // region index, replicates using a region id
+    isActive: true,
+  };
+
   return (
-    <View style={appStyles.container}>
-      <Text>Edit Customer Page</Text>
-      <PrimaryButton
-        text="Save"
-        onPress={() => {
-          console.log("Saving customer details");
-        }}
-      />
-      <PrimaryButton
-        text="Cancel"
-        onPress={() => {
-          console.log("Canceling edits");
-        }}
-      />
-    </View>
+    <CustomerDataForm
+      existingFirstName={dummyCustomer.firstName}
+      existingLastName={dummyCustomer.lastName}
+      existingRegion={dummyCustomer.region}
+      existingIsActive={dummyCustomer.isActive}
+      canDelete={true}
+    />
   );
 };
