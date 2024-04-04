@@ -39,3 +39,19 @@ export const SecondaryButton: React.FC<ButtonProps> = ({
     </Pressable>
   );
 };
+
+export const DangerousButton: React.FC<ButtonProps> = ({
+  text,
+  onPress,
+  onLongPress,
+}) => {
+  return (
+    <Pressable
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={appStyles.dangerousButton}
+    >
+      <Text style={appStyles.dangerousButtonText}>{text}</Text>
+    </Pressable>
+  );
+};

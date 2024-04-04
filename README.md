@@ -47,34 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Design add customer screen
-
-#### Description
-
-Fully lay out the add customer screen and implement any existing global styles, as well as add any new styles required.
-
-Data to be collected on each customer is:
-- First name (edit text)
-- Last name (edit text)
-- Region (dropdown, regions may be hardcoded)
-- Active status (switch)
-
-#### Acceptance criteria
-
-- The add customer screen should be fully designed, and navigation should continue to work as expected.
-- As this screen will work similarly to the edit customer screen, any shared form components should be kept separately in the `components` directory so that they may be reused.
-
-### Design edit customer screen
-
-#### Description
-
-Fully lay out the edit customer screen and implement any existing global styles, as well as add any new styles required.
-
-#### Acceptance criteria
-
-- The edit customer screen should be fully designed, and navigation should continue to work as expected.
-- This should utilize any shared components created as part of the add customer screen.
-
 ### Set up data store
 
 #### Description

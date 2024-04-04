@@ -1,4 +1,6 @@
 import React from "react";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider } from "@ui-kitten/components";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Welcome } from "./src/screens/Welcome";
@@ -30,39 +32,41 @@ const RootStack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootStack.Navigator initialRouteName={Screen.Welcome}>
-        <RootStack.Screen
-          name={Screen.Welcome}
-          component={Welcome}
-          options={{ title: "Welcome" }}
-        />
-        <RootStack.Screen
-          name={Screen.RegionList}
-          component={RegionList}
-          options={{ title: "Regions" }}
-        />
-        <RootStack.Screen
-          name={Screen.CustomerList}
-          component={CustomerList}
-          options={{ title: "Customers" }}
-        />
-        <RootStack.Screen
-          name={Screen.ViewCustomer}
-          component={ViewCustomer}
-          options={{ title: "View Customer" }}
-        />
-        <RootStack.Screen
-          name={Screen.EditCustomer}
-          component={EditCustomer}
-          options={{ title: "Edit Customer" }}
-        />
-        <RootStack.Screen
-          name={Screen.AddCustomer}
-          component={AddCustomer}
-          options={{ title: "Add Customer" }}
-        />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName={Screen.Welcome}>
+          <RootStack.Screen
+            name={Screen.Welcome}
+            component={Welcome}
+            options={{ title: "Welcome" }}
+          />
+          <RootStack.Screen
+            name={Screen.RegionList}
+            component={RegionList}
+            options={{ title: "Regions" }}
+          />
+          <RootStack.Screen
+            name={Screen.CustomerList}
+            component={CustomerList}
+            options={{ title: "Customers" }}
+          />
+          <RootStack.Screen
+            name={Screen.ViewCustomer}
+            component={ViewCustomer}
+            options={{ title: "View Customer" }}
+          />
+          <RootStack.Screen
+            name={Screen.EditCustomer}
+            component={EditCustomer}
+            options={{ title: "Edit Customer" }}
+          />
+          <RootStack.Screen
+            name={Screen.AddCustomer}
+            component={AddCustomer}
+            options={{ title: "Add Customer" }}
+          />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </ApplicationProvider>
   );
 }
