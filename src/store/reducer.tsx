@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
+import regionsReducer from "./reducers/regionsReducer";
 
 const rootReducer = combineReducers({
-  // TODO add individual feature reducers here
+  regionsReducer,
 });
 
 export default rootReducer;
