@@ -9,9 +9,7 @@ import {
   SelectItem,
   Toggle,
 } from "@ui-kitten/components";
-
-// TODO replace with Redux generated regions to ensure one source of truth
-const allRegions = ["Eastern", "Central", "Mountain", "Pacific"];
+import { useGetRegions } from "../store/hooks/useGetRegions";
 
 const styles = StyleSheet.create({
   container: {
@@ -77,10 +75,10 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   const [lastName, setLastName] = React.useState(existingLastName ?? "");
   const [region, setRegion] = React.useState(existingRegion ?? 0);
   const [isActive, setIsActive] = React.useState(existingIsActive ?? true);
-
   const [dropdownIndexPath, setDropdownIndexPath] = React.useState<IndexPath>(
     new IndexPath(region)
   );
+  const { regions } = useGetRegions();
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
@@ -119,11 +117,11 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
           }}
         >
           <Select
-            value={allRegions[region]}
+            value={regions[region]}
             selectedIndex={dropdownIndexPath as IndexPath}
             onSelect={(index) => setDropdownIndexPath(index as IndexPath)}
           >
-            {allRegions.map((region) => (
+            {regions.map((region) => (
               <SelectItem title={region} />
             ))}
           </Select>
