@@ -47,29 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Set up data store
-
-#### Description
-
-Set up the framework for the Redux data store.
-
-#### Acceptance criteria
-
-- Install and set up framework for Redux Toolkit
-- Define data models for regions and customers
-- Install and set up framework for AsyncStorage
-
-### Convert region list to pull from Redux
-
-#### Description
-
-In order to ensure that the displayed region options will be consistent with the options offered when adding customers, let's render the region list navigation buttons based on the regions found in Redux instead of hardcoded options.
-
-#### Acceptance criteria
-
-- This should be a no-op, and the region list should continue to display as expected.
-- When clicking on a region, we should now pass in the region as a navigation param so that we'll be able to filter out customers for that region appropriately in the customer list screen.
-
 ### Implement add customer functionality
 
 #### Description
@@ -78,8 +55,19 @@ Implement functionality to add a new customer to the store.
 
 #### Acceptance criteria
 
-- Adding a new customer via the add customer screen should record the new customer data so that it is visible in Redux.
+- Adding a new customer via the add customer screen should record the new customer data so that it is visible in Redux
 - Form fields should include basic validation (not empty, trim whitespace)
+
+### Set up AsyncStorage
+
+#### Description
+
+Set up the framework for the async data store.
+
+#### Acceptance criteria
+
+- Install and set up framework for AsyncStorage
+- Implement for customer model
 
 ### Implement customer list functionality
 
@@ -87,6 +75,7 @@ Implement functionality to display customers found in Redux rather than hard-cod
 
 #### Description
 
+- When clicking on a region, we should now pass in the region as a navigation param so that we'll be able to filter out customers for that region appropriately in the customer list screen.
 - After adding a customer, that customer should now be visible in the customer list for its region.
 
 #### Acceptance criteria
