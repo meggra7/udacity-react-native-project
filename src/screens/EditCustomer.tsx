@@ -1,5 +1,6 @@
 import React from "react";
 import { CustomerDataForm } from "../components/customerDataForm";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 export const EditCustomer: React.FC = () => {
   // TODO replace with data from Redux once implemented
@@ -10,6 +11,9 @@ export const EditCustomer: React.FC = () => {
     isActive: true,
   };
 
+  // TODO replace with function to edit customer once implemented
+  const { addCustomer } = useGetCustomersReducer();
+
   return (
     <CustomerDataForm
       existingFirstName={dummyCustomer.firstName}
@@ -17,6 +21,7 @@ export const EditCustomer: React.FC = () => {
       existingRegion={dummyCustomer.region}
       existingIsActive={dummyCustomer.isActive}
       canDelete={true}
+      onSave={addCustomer}
     />
   );
 };

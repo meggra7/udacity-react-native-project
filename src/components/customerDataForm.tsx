@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton, SecondaryButton, DangerousButton } from "./buttons";
 import {
@@ -10,6 +10,8 @@ import {
   Toggle,
 } from "@ui-kitten/components";
 import { useGetRegions } from "../store/hooks/useGetRegions";
+import { Customer } from "../store/reducers/customersReducer";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 const styles = StyleSheet.create({
   container: {
@@ -62,6 +64,8 @@ interface CustomerDataFormProps {
   existingRegion?: number;
   existingIsActive?: boolean;
   canDelete: boolean;
+  // TODO add option with Customer without id omission once edit customer implemented
+  onSave: (customer: Omit<Customer, "id">) => void;
 }
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
@@ -70,6 +74,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   existingRegion,
   existingIsActive,
   canDelete,
+  onSave,
 }) => {
   const [firstName, setFirstName] = React.useState(existingFirstName ?? "");
   const [lastName, setLastName] = React.useState(existingLastName ?? "");
@@ -79,6 +84,9 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
     new IndexPath(region)
   );
   const { regions } = useGetRegions();
+  const {} = useGetCustomersReducer();
+  // TODO pull id from Redux once edit customer implemented
+  const customer = { firstName, lastName, region, isActive };
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
@@ -146,12 +154,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <PrimaryButton
-            text="Save"
-            onPress={() => {
-              console.log("Saving customer details");
-            }}
-          />
+          <PrimaryButton text="Save" onPress={() => onSave(customer)} />
           <SecondaryButton
             text="Cancel"
             onPress={() => {
