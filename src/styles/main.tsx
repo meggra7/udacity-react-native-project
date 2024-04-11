@@ -4,6 +4,7 @@ export enum AppColor {
   Primary = "#2BACAC",
   PrimaryLight = "#ddf0f1",
   Danger = "#ac2b2b",
+  DangerLight = "#e79c9f",
 }
 
 export const appStyles = StyleSheet.create({
@@ -21,6 +22,9 @@ export const appStyles = StyleSheet.create({
     margin: 6,
     backgroundColor: AppColor.Primary,
   },
+  primaryButtonDisabled: {
+    backgroundColor: AppColor.PrimaryLight,
+  },
   primaryButtonText: {
     color: "#FFFFFF",
     textTransform: "uppercase",
@@ -34,8 +38,15 @@ export const appStyles = StyleSheet.create({
     borderColor: AppColor.Primary,
     borderWidth: 2,
   },
+  secondaryButtonDisabled: {
+    borderColor: AppColor.PrimaryLight,
+  },
   secondaryButtonText: {
     color: AppColor.Primary,
+    textTransform: "uppercase",
+  },
+  secondaryButtonTextDisabled: {
+    color: AppColor.PrimaryLight,
     textTransform: "uppercase",
   },
   dangerousButton: {
@@ -47,8 +58,16 @@ export const appStyles = StyleSheet.create({
     borderColor: AppColor.Danger,
     borderWidth: 2,
   },
+  dangerousButtonDisabled: {
+    borderColor: AppColor.DangerLight,
+  },
   dangerousButtonText: {
     color: AppColor.Danger,
+    textTransform: "uppercase",
+    fontWeight: "bold",
+  },
+  dangerousButtonTextDisabled: {
+    color: AppColor.DangerLight,
     textTransform: "uppercase",
     fontWeight: "bold",
   },

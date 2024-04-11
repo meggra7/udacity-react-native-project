@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton, SecondaryButton, DangerousButton } from "./buttons";
 import {
@@ -9,9 +9,9 @@ import {
   SelectItem,
   Toggle,
 } from "@ui-kitten/components";
-
-// TODO replace with Redux generated regions to ensure one source of truth
-const allRegions = ["Eastern", "Central", "Mountain", "Pacific"];
+import { useGetRegions } from "../store/hooks/useGetRegions";
+import { Customer } from "../store/reducers/customersReducer";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 const styles = StyleSheet.create({
   container: {
@@ -64,6 +64,10 @@ interface CustomerDataFormProps {
   existingRegion?: number;
   existingIsActive?: boolean;
   canDelete: boolean;
+  isDisabled: boolean;
+  // TODO add option with Customer without id omission once edit customer implemented
+  onSave: (customer: Omit<Customer, "id">) => void;
+  error: string | null;
 }
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
@@ -72,15 +76,21 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   existingRegion,
   existingIsActive,
   canDelete,
+  isDisabled,
+  onSave,
+  error,
 }) => {
   const [firstName, setFirstName] = React.useState(existingFirstName ?? "");
   const [lastName, setLastName] = React.useState(existingLastName ?? "");
   const [region, setRegion] = React.useState(existingRegion ?? 0);
   const [isActive, setIsActive] = React.useState(existingIsActive ?? true);
-
   const [dropdownIndexPath, setDropdownIndexPath] = React.useState<IndexPath>(
     new IndexPath(region)
   );
+  const { regions } = useGetRegions();
+  const {} = useGetCustomersReducer();
+  // TODO pull id from Redux once edit customer implemented
+  const customer = { firstName, lastName, region, isActive };
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
@@ -119,11 +129,11 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
           }}
         >
           <Select
-            value={allRegions[region]}
+            value={regions[region]}
             selectedIndex={dropdownIndexPath as IndexPath}
             onSelect={(index) => setDropdownIndexPath(index as IndexPath)}
           >
-            {allRegions.map((region) => (
+            {regions.map((region) => (
               <SelectItem title={region} />
             ))}
           </Select>
@@ -150,15 +160,15 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         <View style={{ flexDirection: "row" }}>
           <PrimaryButton
             text="Save"
-            onPress={() => {
-              console.log("Saving customer details");
-            }}
+            onPress={() => onSave(customer)}
+            disabled={isDisabled}
           />
           <SecondaryButton
             text="Cancel"
             onPress={() => {
               console.log("Canceling edits");
             }}
+            disabled={isDisabled}
           />
         </View>
         {canDelete && (
@@ -167,9 +177,11 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
             onPress={() => {
               console.log("Deleting customer");
             }}
+            disabled={isDisabled}
           />
         )}
       </View>
+      {error && <Text style={{ color: AppColor.Danger }}>{error}</Text>}
     </View>
   );
 };

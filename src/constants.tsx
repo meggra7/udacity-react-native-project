@@ -13,3 +13,7 @@ export enum Screen {
   EditCustomer = "EditCustomer",
   AddCustomer = "AddCustomer",
 }
+
+export enum AsyncStorageKey {
+  Customer = "CUSTOMER",
+}
