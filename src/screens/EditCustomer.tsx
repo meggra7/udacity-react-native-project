@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomerDataForm } from "../components/customerDataForm";
+import { CustomerDataForm } from "../components/CustomerDataForm";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 export const EditCustomer: React.FC = () => {
