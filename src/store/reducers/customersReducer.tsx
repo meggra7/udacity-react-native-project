@@ -24,21 +24,10 @@ const slice = createSlice({
     addCustomer: (state, action: PayloadAction<Omit<Customer, "id">>) => {
       state.isLoading = true;
       state.error = null;
-
-      const newCustomer: Omit<Customer, "id"> = action.payload;
-
-      const lastAddedCustomerId = state.customers?.at(-1)?.id ?? 0;
-      const newCustomerId = lastAddedCustomerId + 1;
-
-      const customerToBeAdded = {
-        ...newCustomer,
-        id: newCustomerId,
-      };
-
-      state.customers = [...(state.customers || []), customerToBeAdded];
     },
-    addCustomerResult: (state) => {
+    addCustomerResult: (state, action: PayloadAction<Customer[]>) => {
       state.isLoading = false;
+      state.customers = action.payload;
     },
     addCustomerError: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
