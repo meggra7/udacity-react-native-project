@@ -47,28 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Implement add customer functionality
-
-#### Description
-
-Implement functionality to add a new customer to the store.
-
-#### Acceptance criteria
-
-- Adding a new customer via the add customer screen should record the new customer data so that it is visible in Redux
-- Form fields should include basic validation (not empty, trim whitespace)
-
-### Set up AsyncStorage
-
-#### Description
-
-Set up the framework for the async data store.
-
-#### Acceptance criteria
-
-- Install and set up framework for AsyncStorage
-- Implement for customer model
-
 ### Implement customer list functionality
 
 Implement functionality to display customers found in Redux rather than hard-coded mock data.
