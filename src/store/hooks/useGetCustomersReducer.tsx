@@ -8,30 +8,30 @@ export const useGetCustomersReducer = () => {
   const customers = useSelector(
     (state: RootState) => state.customersReducer.customers
   );
-  const isLoadingAddCustomer = useSelector(
-    (state: RootState) => state.customersReducer.isLoadingAddCustomer
-  );
-  const errorAddCustomer = useSelector(
-    (state: RootState) => state.customersReducer.errorAddCustomer
-  );
   const isLoadingSyncCustomers = useSelector(
     (state: RootState) => state.customersReducer.isLoadingSyncCustomers
   );
   const errorSyncCustomers = useSelector(
     (state: RootState) => state.customersReducer.errorSyncCustomers
   );
+  const isLoadingSaveCustomer = useSelector(
+    (state: RootState) => state.customersReducer.isLoadingSaveCustomer
+  );
+  const errorSaveCustomer = useSelector(
+    (state: RootState) => state.customersReducer.errorSaveCustomer
+  );
 
   return {
     customers,
-    isLoadingAddCustomer,
-    errorAddCustomer,
-    addCustomer: (customer: Omit<Customer, "id">) => {
-      return dispatch(actions.addCustomer(customer));
-    },
     isLoadingSyncCustomers,
     errorSyncCustomers,
     syncCustomers: () => {
       return dispatch(actions.syncCustomers());
+    },
+    isLoadingSaveCustomer,
+    errorSaveCustomer,
+    saveCustomer: (customer: Customer) => {
+      return dispatch(actions.saveCustomer(customer));
     },
   };
 };

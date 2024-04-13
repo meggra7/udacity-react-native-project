@@ -27,7 +27,7 @@ export const ViewCustomer: React.FC = () => {
     (customer) => customer.id === selectedCustomerId
   );
 
-  if (!regions || !customers) {
+  if (!params || !regions || !customers) {
     return (
       <View style={appStyles.loadingIndicator}>
         <ActivityIndicator />
@@ -38,7 +38,7 @@ export const ViewCustomer: React.FC = () => {
   if (!selectedCustomer) {
     return (
       <View style={appStyles.container}>
-        <Text>We're sorry, the selected customer cannot be found.</Text>
+        <Text>We're sorry, we're having trouble finding this customer. Please try again later.</Text>
       </View>
     );
   }
@@ -94,7 +94,9 @@ export const ViewCustomer: React.FC = () => {
       <View style={viewCustomerStyles.section}>
         <Pressable
           style={viewCustomerStyles.actionContainer}
-          onPress={() => navigate(Screen.EditCustomer)}
+          onPress={() =>
+            navigate(Screen.EditCustomer, { customer: selectedCustomer })
+          }
         >
           <Feather name="edit" size={32} color={AppColor.Primary} />
           <Text style={viewCustomerStyles.actionText}>Edit customer</Text>

@@ -3,15 +3,15 @@ import { CustomerDataForm } from "../components/CustomerDataForm";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 export const AddCustomer: React.FC = () => {
-  const { addCustomer, isLoadingAddCustomer, errorAddCustomer } =
+  const { saveCustomer, isLoadingSaveCustomer, errorSaveCustomer } =
     useGetCustomersReducer();
 
   return (
     <CustomerDataForm
       canDelete={false}
-      onSave={addCustomer}
-      isDisabled={isLoadingAddCustomer}
-      error={errorAddCustomer}
+      onSave={saveCustomer}
+      isDisabled={isLoadingSaveCustomer}
+      error={errorSaveCustomer}
     />
   );
 };

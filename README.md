@@ -47,17 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Implement edit customer functionality
-
-#### Description
-
-Implement functionality to edit customer details when selected from the view customer screen.
-
-#### Acceptance criteria
-
-- Tapping on the edit customer option from the view customer screen should display the edit customer screen with the customer's details pre-filled in the edit customer form.
-- Values should be able to be changed and saved.
-
 ### Implement delete customer functionality
 
 #### Description

@@ -1,27 +1,44 @@
 import React from "react";
 import { CustomerDataForm } from "../components/CustomerDataForm";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { RootStackParamList } from "../../App";
+import { ActivityIndicator, Text, View } from "react-native";
+import { appStyles } from "../styles/main";
 
 export const EditCustomer: React.FC = () => {
-  // TODO replace with data from Redux once implemented
-  const dummyCustomer = {
-    firstName: "Jane",
-    lastName: "Doe",
-    region: 3, // region index, replicates using a region id
-    isActive: true,
-  };
+  const { saveCustomer, isLoadingSaveCustomer, errorSaveCustomer } =
+    useGetCustomersReducer();
+  const { params } = useRoute<RouteProp<RootStackParamList, "EditCustomer">>();
 
-  // TODO replace with function to edit customer once implemented
-  const { addCustomer } = useGetCustomersReducer();
+  const customerToEdit = params?.customer;
+
+  if (!params) {
+    return (
+      <View style={appStyles.loadingIndicator}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (!customerToEdit) {
+    return (
+      <View style={appStyles.container}>
+        <Text>
+          We're sorry, we're having trouble finding this customer to edit.
+          Please try again later.
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <CustomerDataForm
-      existingFirstName={dummyCustomer.firstName}
-      existingLastName={dummyCustomer.lastName}
-      existingRegion={dummyCustomer.region}
-      existingIsActive={dummyCustomer.isActive}
+      existingCustomer={customerToEdit}
       canDelete={true}
-      onSave={addCustomer}
+      onSave={saveCustomer}
+      isDisabled={isLoadingSaveCustomer}
+      error={errorSaveCustomer}
     />
   );
 };
