@@ -10,33 +10,55 @@ export type Customer = {
 
 interface CustomersReducerState {
   customers?: Customer[];
-  isLoading: boolean;
-  error: string | null;
+  isLoadingAddCustomer: boolean;
+  errorAddCustomer: string | null;
+  isLoadingSyncCustomers: boolean;
+  errorSyncCustomers: string | null;
 }
 
 const slice = createSlice({
   name: "customersReducer",
   initialState: {
-    isLoading: false,
-    error: null,
+    isLoadingAddCustomer: false,
+    errorAddCustomer: null,
+    isLoadingSyncCustomers: false,
+    errorSyncCustomers: null,
   } satisfies CustomersReducerState as CustomersReducerState,
   reducers: {
+    syncCustomers: (state) => {
+      state.isLoadingSyncCustomers = true;
+      state.errorSyncCustomers = null;
+    },
+    syncCustomersResult: (state, action: PayloadAction<Customer[]>) => {
+      state.isLoadingSyncCustomers = false;
+      state.customers = action.payload;
+    },
+    syncCustomersError: (state, action: PayloadAction<string>) => {
+      state.isLoadingSyncCustomers = false;
+      state.errorSyncCustomers = action.payload;
+    },
     addCustomer: (state, action: PayloadAction<Omit<Customer, "id">>) => {
-      state.isLoading = true;
-      state.error = null;
+      state.isLoadingAddCustomer = true;
+      state.errorAddCustomer = null;
     },
     addCustomerResult: (state, action: PayloadAction<Customer[]>) => {
-      state.isLoading = false;
+      state.isLoadingAddCustomer = false;
       state.customers = action.payload;
     },
     addCustomerError: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
+      state.isLoadingAddCustomer = false;
+      state.errorAddCustomer = action.payload;
     },
   },
 });
 
-export const { addCustomer, addCustomerResult, addCustomerError } =
-  slice.actions;
+export const {
+  syncCustomers,
+  syncCustomersResult,
+  syncCustomersError,
+  addCustomer,
+  addCustomerResult,
+  addCustomerError,
+} = slice.actions;
 
 export default slice.reducer;

@@ -47,17 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Implement customer list functionality
-
-Implement functionality to display customers found in Redux rather than hard-coded mock data.
-
-#### Description
-
-- When clicking on a region, we should now pass in the region as a navigation param so that we'll be able to filter out customers for that region appropriately in the customer list screen.
-- After adding a customer, that customer should now be visible in the customer list for its region.
-
-#### Acceptance criteria
-
 ### Implement view customer functionality
 
 #### Description

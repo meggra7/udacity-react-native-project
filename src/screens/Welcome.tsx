@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "react-native";
 import { appStyles } from "../styles/main";
 import { PrimaryButton, DangerousButton } from "../components/buttons";
 import { Screen } from "../constants";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 export const Welcome: React.FC = () => {
   const { navigate } = useNavigation();
+  const { customers, syncCustomers } = useGetCustomersReducer();
+
+  useEffect(() => {
+    if (!customers) {
+      syncCustomers();
+    }
+  }, []);
 
   return (
     <View

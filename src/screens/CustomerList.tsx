@@ -1,78 +1,96 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton } from "../components/buttons";
 import { Screen } from "../constants";
+import { RootStackParamList } from "../../App";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
-export const CustomerList: React.FC = () => {
+interface CustomerListItemProps {
+  id: number;
+  lastName: string;
+  firstName: string;
+}
+
+const CustomerListItem: React.FC<CustomerListItemProps> = ({
+  id,
+  lastName,
+  firstName,
+}) => {
   const { navigate } = useNavigation();
 
-  const dummyCustomerData = [
-    {
-      lastName: "Doe",
-      firstName: "Jane",
-    },
-    {
-      lastName: "Schmoe",
-      firstName: "Joe",
-    },
-  ];
+  return (
+    <Pressable
+      style={{
+        borderColor: AppColor.PrimaryLight,
+        borderWidth: 1,
+        width: "100%",
+        padding: 16,
+        marginVertical: 4,
+        justifyContent: "center",
+        borderRadius: 3,
+      }}
+      onPress={() => {
+        console.log(`Customer ${id} selected`);
+        navigate(Screen.ViewCustomer);
+      }}
+    >
+      <Text>
+        {lastName}, {firstName}
+      </Text>
+    </Pressable>
+  );
+};
 
-  // TODO Dynamically determine based on number of customers once Redux implemented
-  const isCustomerListEmpty = false;
+const EmptyCustomerListView: React.FC = () => {
+  const { navigate } = useNavigation();
 
-  const EmptyView: React.FC = () => {
+  return (
+    <View>
+      <Text style={{ marginBottom: 8 }}>
+        No customers have been added for this region
+      </Text>
+      <PrimaryButton
+        text="Add Customer"
+        onPress={() => navigate(Screen.AddCustomer)}
+      />
+    </View>
+  );
+};
+
+export const CustomerList: React.FC = () => {
+  const { params } = useRoute<RouteProp<RootStackParamList, "CustomerList">>();
+  const { customers } = useGetCustomersReducer();
+
+  const regionId = params.regionId;
+  const customersForRegion = customers?.filter(
+    (customer) => customer.region === regionId
+  );
+
+  if (!customers) {
     return (
-      <View>
-        <Text style={{ marginBottom: 8 }}>
-          No customers have been added for this region
-        </Text>
-        <PrimaryButton
-          text="Add Customer"
-          onPress={() => navigate(Screen.AddCustomer)}
-        />
+      <View style={appStyles.loadingIndicator}>
+        <ActivityIndicator />
       </View>
     );
-  };
-
-  interface CustomerListItemProps {
-    lastName: string;
-    firstName: string;
   }
 
-  const CustomerListItem: React.FC<CustomerListItemProps> = ({
-    lastName,
-    firstName,
-  }) => {
+  if (customersForRegion?.length === 0) {
     return (
-      <Pressable
-        style={{
-          borderColor: AppColor.PrimaryLight,
-          borderWidth: 1,
-          width: "100%",
-          padding: 16,
-          marginVertical: 4,
-          justifyContent: "center",
-          borderRadius: 3,
-        }}
-        onPress={() => {
-          console.log(`Customer ${firstName} ${lastName} selected`);
-          navigate(Screen.ViewCustomer);
-        }}
-      >
-        <Text>
-          {lastName}, {firstName}
-        </Text>
-      </Pressable>
+      <View style={appStyles.container}>
+        <EmptyCustomerListView />
+      </View>
     );
-  };
+  }
 
-  return isCustomerListEmpty ? (
-    <View style={appStyles.container}>
-      <EmptyView />
-    </View>
-  ) : (
+  return (
     <View
       style={{
         ...appStyles.container,
@@ -83,12 +101,14 @@ export const CustomerList: React.FC = () => {
         Select a customer below to view their details
       </Text>
       <ScrollView style={{ width: "100%" }}>
-        {/* TODO replace with actual customer data once Redux implemented */}
-        {dummyCustomerData.map((customer) => (
-          <CustomerListItem
-            lastName={customer.lastName}
-            firstName={customer.firstName}
-          />
+        {customersForRegion?.map((customer) => (
+          <View key={`customer-${customer.id}`}>
+            <CustomerListItem
+              id={customer.id}
+              lastName={customer.lastName}
+              firstName={customer.firstName}
+            />
+          </View>
         ))}
       </ScrollView>
     </View>
