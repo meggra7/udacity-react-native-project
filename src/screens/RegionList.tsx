@@ -12,18 +12,18 @@ export const RegionList: React.FC = () => {
 
   return (
     <View style={appStyles.container}>
-      <Text style={{ marginBottom: 8 }}>
+      <Text style={{ marginBottom: 8, textAlign: "center" }}>
         Select a region below to view customers for that region
       </Text>
-      {/* TODO Should implement unique keys when mapping array, but ignoring for now since practice project */}
-      {regions.map((region, id) => (
-        <PrimaryButton
-          text={region}
-          onPress={() => {
-            console.log(`Region ${id} selected`);
-            navigate(Screen.CustomerList);
-          }}
-        />
+      {regions.map((region: string, id: number) => (
+        <View key={`region-${id}`}>
+          <PrimaryButton
+            text={region}
+            onPress={() => {
+              navigate(Screen.CustomerList, { regionId: id });
+            }}
+          />
+        </View>
       ))}
     </View>
   );

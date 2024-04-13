@@ -14,10 +14,10 @@ import { AddCustomer } from "./src/screens/AddCustomer";
 import { Screen } from "./src/constants";
 
 // Per documentation https://reactnavigation.org/docs/typescript/#type-checking-the-navigator
-type RootStackParamList = {
+export type RootStackParamList = {
   Welcome: undefined;
   RegionList: undefined;
-  CustomerList: undefined;
+  CustomerList: { regionId: number };
   ViewCustomer: undefined;
   EditCustomer: undefined;
   AddCustomer: undefined;
