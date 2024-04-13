@@ -47,16 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Implement view customer functionality
-
-#### Description
-
-Implement functionality to view customer details when tapped on from the customer list.
-
-#### Acceptance criteria
-
-- Tapping on a customer in the customer list should display the view customer screen with the customer's full details included.
-
 ### Implement edit customer functionality
 
 #### Description

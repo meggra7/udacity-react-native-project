@@ -18,7 +18,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   RegionList: undefined;
   CustomerList: { regionId: number };
-  ViewCustomer: undefined;
+  ViewCustomer: { customerId: number };
   EditCustomer: undefined;
   AddCustomer: undefined;
 };

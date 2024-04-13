@@ -38,8 +38,7 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({
         borderRadius: 3,
       }}
       onPress={() => {
-        console.log(`Customer ${id} selected`);
-        navigate(Screen.ViewCustomer);
+        navigate(Screen.ViewCustomer, { customerId: id });
       }}
     >
       <Text>
