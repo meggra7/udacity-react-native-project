@@ -14,6 +14,8 @@ interface CustomersReducerState {
   errorSyncCustomers: string | null;
   isLoadingSaveCustomer: boolean;
   errorSaveCustomer: string | null;
+  isLoadingDeleteCustomer: boolean;
+  errorDeleteCustomer: string | null;
 }
 
 const slice = createSlice({
@@ -23,6 +25,8 @@ const slice = createSlice({
     errorSyncCustomers: null,
     isLoadingSaveCustomer: false,
     errorSaveCustomer: null,
+    isLoadingDeleteCustomer: false,
+    errorDeleteCustomer: null,
   } satisfies CustomersReducerState as CustomersReducerState,
   reducers: {
     syncCustomers: (state) => {
@@ -49,6 +53,18 @@ const slice = createSlice({
       state.isLoadingSaveCustomer = false;
       state.errorSaveCustomer = action.payload;
     },
+    deleteCustomer: (state, action: PayloadAction<number>) => {
+      state.isLoadingDeleteCustomer = true;
+      state.errorDeleteCustomer = null;
+    },
+    deleteCustomerResult: (state, action: PayloadAction<Customer[]>) => {
+      state.isLoadingDeleteCustomer = false;
+      state.customers = action.payload;
+    },
+    deleteCustomerError: (state, action: PayloadAction<string>) => {
+      state.isLoadingDeleteCustomer = false;
+      state.errorDeleteCustomer = action.payload;
+    },
   },
 });
 
@@ -59,6 +75,9 @@ export const {
   saveCustomer,
   saveCustomerResult,
   saveCustomerError,
+  deleteCustomer,
+  deleteCustomerResult,
+  deleteCustomerError,
 } = slice.actions;
 
 export default slice.reducer;

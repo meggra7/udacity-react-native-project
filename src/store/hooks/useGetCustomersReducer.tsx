@@ -20,6 +20,12 @@ export const useGetCustomersReducer = () => {
   const errorSaveCustomer = useSelector(
     (state: RootState) => state.customersReducer.errorSaveCustomer
   );
+  const isLoadingDeleteCustomer = useSelector(
+    (state: RootState) => state.customersReducer.isLoadingDeleteCustomer
+  );
+  const errorDeleteCustomer = useSelector(
+    (state: RootState) => state.customersReducer.errorDeleteCustomer
+  );
 
   return {
     customers,
@@ -32,6 +38,11 @@ export const useGetCustomersReducer = () => {
     errorSaveCustomer,
     saveCustomer: (customer: Customer) => {
       return dispatch(actions.saveCustomer(customer));
+    },
+    isLoadingDeleteCustomer,
+    errorDeleteCustomer,
+    deleteCustomer: (customerId: number) => {
+      return dispatch(actions.deleteCustomer(customerId));
     },
   };
 };
