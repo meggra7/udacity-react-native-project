@@ -94,7 +94,9 @@ export const ViewCustomer: React.FC = () => {
       <View style={viewCustomerStyles.section}>
         <Pressable
           style={viewCustomerStyles.actionContainer}
-          onPress={() => navigate(Screen.EditCustomer)}
+          onPress={() =>
+            navigate(Screen.EditCustomer, { customer: selectedCustomer })
+          }
         >
           <Feather name="edit" size={32} color={AppColor.Primary} />
           <Text style={viewCustomerStyles.actionText}>Edit customer</Text>

@@ -12,6 +12,7 @@ import { ViewCustomer } from "./src/screens/ViewCustomer";
 import { EditCustomer } from "./src/screens/EditCustomer";
 import { AddCustomer } from "./src/screens/AddCustomer";
 import { Screen } from "./src/constants";
+import { Customer } from "./src/store/reducers/customersReducer";
 
 // Per documentation https://reactnavigation.org/docs/typescript/#type-checking-the-navigator
 export type RootStackParamList = {
@@ -19,7 +20,7 @@ export type RootStackParamList = {
   RegionList: undefined;
   CustomerList: { regionId: number };
   ViewCustomer: { customerId: number };
-  EditCustomer: undefined;
+  EditCustomer: { customer: Customer };
   AddCustomer: undefined;
 };
 
