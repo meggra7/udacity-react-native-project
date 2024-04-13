@@ -11,7 +11,6 @@ import {
 } from "@ui-kitten/components";
 import { useGetRegions } from "../store/hooks/useGetRegions";
 import { Customer } from "../store/reducers/customersReducer";
-import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,38 +58,34 @@ const styles = StyleSheet.create({
 });
 
 interface CustomerDataFormProps {
-  existingFirstName?: string;
-  existingLastName?: string;
-  existingRegion?: number;
-  existingIsActive?: boolean;
+  existingCustomer?: Customer;
   canDelete: boolean;
   isDisabled: boolean;
-  // TODO add option with Customer without id omission once edit customer implemented
-  onSave: (customer: Omit<Customer, "id">) => void;
+  onSave: (customer: Customer) => void;
   error: string | null;
 }
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
-  existingFirstName,
-  existingLastName,
-  existingRegion,
-  existingIsActive,
+  existingCustomer,
   canDelete,
   isDisabled,
   onSave,
   error,
 }) => {
-  const [firstName, setFirstName] = React.useState(existingFirstName ?? "");
-  const [lastName, setLastName] = React.useState(existingLastName ?? "");
-  const [region, setRegion] = React.useState(existingRegion ?? 0);
-  const [isActive, setIsActive] = React.useState(existingIsActive ?? true);
+  const [firstName, setFirstName] = React.useState(
+    existingCustomer?.firstName ?? ""
+  );
+  const [lastName, setLastName] = React.useState(
+    existingCustomer?.lastName ?? ""
+  );
+  const [region, setRegion] = React.useState(existingCustomer?.region ?? 0);
+  const [isActive, setIsActive] = React.useState(
+    existingCustomer?.isActive ?? true
+  );
   const [dropdownIndexPath, setDropdownIndexPath] = React.useState<IndexPath>(
     new IndexPath(region)
   );
   const { regions } = useGetRegions();
-  const {} = useGetCustomersReducer();
-  // TODO pull id from Redux once edit customer implemented
-  const customer = { firstName, lastName, region, isActive };
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
@@ -160,7 +155,15 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         <View style={{ flexDirection: "row" }}>
           <PrimaryButton
             text="Save"
-            onPress={() => onSave(customer)}
+            onPress={() =>
+              onSave({
+                firstName,
+                lastName,
+                region,
+                isActive,
+                id: existingCustomer?.id,
+              })
+            }
             disabled={isDisabled}
           />
           <SecondaryButton

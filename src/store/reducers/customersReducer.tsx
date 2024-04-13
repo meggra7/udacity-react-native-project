@@ -5,24 +5,24 @@ export type Customer = {
   lastName: string;
   region: number;
   isActive: boolean;
-  id: number;
+  id?: number;
 };
 
 interface CustomersReducerState {
   customers?: Customer[];
-  isLoadingAddCustomer: boolean;
-  errorAddCustomer: string | null;
   isLoadingSyncCustomers: boolean;
   errorSyncCustomers: string | null;
+  isLoadingSaveCustomer: boolean;
+  errorSaveCustomer: string | null;
 }
 
 const slice = createSlice({
   name: "customersReducer",
   initialState: {
-    isLoadingAddCustomer: false,
-    errorAddCustomer: null,
     isLoadingSyncCustomers: false,
     errorSyncCustomers: null,
+    isLoadingSaveCustomer: false,
+    errorSaveCustomer: null,
   } satisfies CustomersReducerState as CustomersReducerState,
   reducers: {
     syncCustomers: (state) => {
@@ -37,17 +37,17 @@ const slice = createSlice({
       state.isLoadingSyncCustomers = false;
       state.errorSyncCustomers = action.payload;
     },
-    addCustomer: (state, action: PayloadAction<Omit<Customer, "id">>) => {
-      state.isLoadingAddCustomer = true;
-      state.errorAddCustomer = null;
+    saveCustomer: (state, action: PayloadAction<Customer>) => {
+      state.isLoadingSaveCustomer = true;
+      state.errorSaveCustomer = null;
     },
-    addCustomerResult: (state, action: PayloadAction<Customer[]>) => {
-      state.isLoadingAddCustomer = false;
+    saveCustomerResult: (state, action: PayloadAction<Customer[]>) => {
+      state.isLoadingSaveCustomer = false;
       state.customers = action.payload;
     },
-    addCustomerError: (state, action: PayloadAction<string>) => {
-      state.isLoadingAddCustomer = false;
-      state.errorAddCustomer = action.payload;
+    saveCustomerError: (state, action: PayloadAction<string>) => {
+      state.isLoadingSaveCustomer = false;
+      state.errorSaveCustomer = action.payload;
     },
   },
 });
@@ -56,9 +56,9 @@ export const {
   syncCustomers,
   syncCustomersResult,
   syncCustomersError,
-  addCustomer,
-  addCustomerResult,
-  addCustomerError,
+  saveCustomer,
+  saveCustomerResult,
+  saveCustomerError,
 } = slice.actions;
 
 export default slice.reducer;
