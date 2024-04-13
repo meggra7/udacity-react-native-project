@@ -15,6 +15,12 @@ export const appStyles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
   },
+  loadingIndicator: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   primaryButton: {
     alignItems: "center",
     justifyContent: "center",
