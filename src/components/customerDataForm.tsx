@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton, SecondaryButton, DangerousButton } from "./buttons";
 import {
@@ -96,6 +96,23 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
     setRegion(dropdownIndexPath.row);
   }, [dropdownIndexPath.row]);
 
+  const showDeleteCustomerAlert = () => {
+    Alert.alert(
+      "Deleting Customer",
+      "Are you sure you want to delete this customer? This cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes, delete customer",
+          onPress: () => deleteCustomer(existingCustomer?.id ?? -1),
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -182,7 +199,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         {canDelete && (
           <DangerousButton
             text="Delete"
-            onPress={() => deleteCustomer(existingCustomer?.id ?? -1)}
+            onPress={() => showDeleteCustomerAlert()}
             disabled={disableButtons}
           />
         )}
