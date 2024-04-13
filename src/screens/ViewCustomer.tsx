@@ -2,20 +2,46 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { Screen } from "../constants";
+import { RootStackParamList } from "../../App";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
+import { useGetRegions } from "../store/hooks/useGetRegions";
 
 export const ViewCustomer: React.FC = () => {
   const { navigate } = useNavigation();
+  const { params } = useRoute<RouteProp<RootStackParamList, "ViewCustomer">>();
+  const { regions } = useGetRegions();
+  const { customers } = useGetCustomersReducer();
 
-  const dummyCustomer = {
-    firstName: "Jane",
-    lastName: "Doe",
-    region: "Eastern",
-    isActive: true,
-  };
+  const selectedCustomerId = params.customerId;
+  const selectedCustomer = customers?.find(
+    (customer) => customer.id === selectedCustomerId
+  );
+
+  if (!regions || !customers) {
+    return (
+      <View style={appStyles.loadingIndicator}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (!selectedCustomer) {
+    return (
+      <View style={appStyles.container}>
+        <Text>We're sorry, the selected customer cannot be found.</Text>
+      </View>
+    );
+  }
 
   const viewCustomerStyles = StyleSheet.create({
     container: {
@@ -41,7 +67,7 @@ export const ViewCustomer: React.FC = () => {
   return (
     <View style={viewCustomerStyles.container}>
       <View style={viewCustomerStyles.section}>
-        {dummyCustomer.isActive ? (
+        {selectedCustomer.isActive ? (
           <Fontisto name="smiley" size={48} color="green" />
         ) : (
           <Fontisto name="frowning" size={48} color="grey" />
@@ -49,18 +75,20 @@ export const ViewCustomer: React.FC = () => {
         <Text
           style={{
             textTransform: "uppercase",
-            color: dummyCustomer.isActive ? "green" : "grey",
+            color: selectedCustomer.isActive ? "green" : "grey",
           }}
         >
-          {dummyCustomer.isActive ? "Active" : "Inactive"}
+          {selectedCustomer.isActive ? "Active" : "Inactive"}
         </Text>
       </View>
 
       <View style={viewCustomerStyles.section}>
         <Text style={{ fontSize: 32 }}>
-          {dummyCustomer.firstName} {dummyCustomer.lastName}
+          {selectedCustomer.firstName} {selectedCustomer.lastName}
         </Text>
-        <Text style={{ fontSize: 22 }}>{dummyCustomer.region} Region</Text>
+        <Text style={{ fontSize: 22 }}>
+          {regions[selectedCustomer.region]} Region
+        </Text>
       </View>
 
       <View style={viewCustomerStyles.section}>
