@@ -77,4 +77,9 @@ export const appStyles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
   },
+  errorText: {
+    color: AppColor.Danger,
+    textAlign: 'center',
+    marginVertical: 8,
+  }
 });

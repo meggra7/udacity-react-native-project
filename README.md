@@ -55,17 +55,9 @@ This task is to primarily ensure that all navigation nuances are wired up correc
 
 #### Acceptance criteria
 
-- TBD
-
-### Implement clear all data functionality
-
-#### Description
-
-Implement functionality to reset all customer data.
-
-#### Acceptance criteria
-
-- Clicking to clear all data from the welcome screen should remove all customer data from the store.
+- Upon successfully adding or editing a customer, navigate to the view customer page for that customer that will navigate back to the region for that customer
+- Upon successfully deleting a customer, navigate to the customer list for that customer's region
+- Upon clicking to add a customer from a specific region list, pass in the region id to pre-populate the region
 
 ### Implement push notifications
 

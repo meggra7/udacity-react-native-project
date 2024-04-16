@@ -14,6 +14,12 @@ export const useGetCustomersReducer = () => {
   const errorSyncCustomers = useSelector(
     (state: RootState) => state.customersReducer.errorSyncCustomers
   );
+  const isLoadingResetCustomers = useSelector(
+    (state: RootState) => state.customersReducer.isLoadingResetCustomers
+  );
+  const errorResetCustomers = useSelector(
+    (state: RootState) => state.customersReducer.errorResetCustomers
+  );
   const isLoadingSaveCustomer = useSelector(
     (state: RootState) => state.customersReducer.isLoadingSaveCustomer
   );
@@ -33,6 +39,11 @@ export const useGetCustomersReducer = () => {
     errorSyncCustomers,
     syncCustomers: () => {
       return dispatch(actions.syncCustomers());
+    },
+    isLoadingResetCustomers,
+    errorResetCustomers,
+    resetCustomers: () => {
+      return dispatch(actions.resetCustomers());
     },
     isLoadingSaveCustomer,
     errorSaveCustomer,

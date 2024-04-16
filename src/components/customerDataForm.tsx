@@ -205,7 +205,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         )}
       </View>
       {(error || errorDeleteCustomer) && (
-        <Text style={{ color: AppColor.Danger }}>
+        <Text style={appStyles.errorText}>
           {error ?? errorDeleteCustomer}
         </Text>
       )}
