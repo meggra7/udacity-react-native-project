@@ -13,6 +13,7 @@ export const Welcome: React.FC = () => {
     syncCustomers,
     resetCustomers,
     isLoadingResetCustomers,
+    errorResetCustomers,
   } = useGetCustomersReducer();
 
   useEffect(() => {
@@ -66,6 +67,12 @@ export const Welcome: React.FC = () => {
         />
       </View>
 
+      {errorResetCustomers && (
+        <Text style={appStyles.errorText}>
+          We're sorry, there was an error clearing the customer data. Please try
+          again later.
+        </Text>
+      )}
       <DangerousButton
         text="Clear all customer data"
         onPress={showClearCustomerDataAlert}
