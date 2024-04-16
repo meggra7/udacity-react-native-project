@@ -47,18 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Implement delete customer functionality
-
-#### Description
-
-Implement functionality to delete customer when selected from the view customer screen.
-
-#### Acceptance criteria
-
-- Tapping on delete customer from the view customer screen should display a dialog to confirm that the user wishes to delete the customer.
-- Upon deleting the customer, we should navigate back to the region list.
-- The customer should no longer appear in the region list.
-
 ### Confirm all navigation works as expected
 
 #### Description

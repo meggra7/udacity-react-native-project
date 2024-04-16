@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppColor, appStyles } from "../styles/main";
 import { PrimaryButton, SecondaryButton, DangerousButton } from "./buttons";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@ui-kitten/components";
 import { useGetRegions } from "../store/hooks/useGetRegions";
 import { Customer } from "../store/reducers/customersReducer";
+import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +73,9 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   onSave,
   error,
 }) => {
+  const { deleteCustomer, isLoadingDeleteCustomer, errorDeleteCustomer } =
+    useGetCustomersReducer();
+  const { regions } = useGetRegions();
   const [firstName, setFirstName] = React.useState(
     existingCustomer?.firstName ?? ""
   );
@@ -85,11 +89,29 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   const [dropdownIndexPath, setDropdownIndexPath] = React.useState<IndexPath>(
     new IndexPath(region)
   );
-  const { regions } = useGetRegions();
+
+  const disableButtons = isDisabled || isLoadingDeleteCustomer;
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
   }, [dropdownIndexPath.row]);
+
+  const showDeleteCustomerAlert = () => {
+    Alert.alert(
+      "Deleting Customer",
+      "Are you sure you want to delete this customer? This cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Yes, delete customer",
+          onPress: () => deleteCustomer(existingCustomer?.id ?? -1),
+        },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -164,27 +186,29 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
                 id: existingCustomer?.id,
               })
             }
-            disabled={isDisabled}
+            disabled={disableButtons}
           />
           <SecondaryButton
             text="Cancel"
             onPress={() => {
               console.log("Canceling edits");
             }}
-            disabled={isDisabled}
+            disabled={disableButtons}
           />
         </View>
         {canDelete && (
           <DangerousButton
             text="Delete"
-            onPress={() => {
-              console.log("Deleting customer");
-            }}
-            disabled={isDisabled}
+            onPress={() => showDeleteCustomerAlert()}
+            disabled={disableButtons}
           />
         )}
       </View>
-      {error && <Text style={{ color: AppColor.Danger }}>{error}</Text>}
+      {(error || errorDeleteCustomer) && (
+        <Text style={{ color: AppColor.Danger }}>
+          {error ?? errorDeleteCustomer}
+        </Text>
+      )}
     </View>
   );
 };
