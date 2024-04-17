@@ -26,6 +26,9 @@ export const useGetCustomersReducer = () => {
   const errorSaveCustomer = useSelector(
     (state: RootState) => state.customersReducer.errorSaveCustomer
   );
+  const isRequestedDeleteCustomer = useSelector(
+    (state: RootState) => state.customersReducer.isRequestedDeleteCustomer
+  );
   const isLoadingDeleteCustomer = useSelector(
     (state: RootState) => state.customersReducer.isLoadingDeleteCustomer
   );
@@ -50,10 +53,14 @@ export const useGetCustomersReducer = () => {
     saveCustomer: (customer: Customer) => {
       return dispatch(actions.saveCustomer(customer));
     },
+    isRequestedDeleteCustomer,
     isLoadingDeleteCustomer,
     errorDeleteCustomer,
     deleteCustomer: (customerId: number) => {
       return dispatch(actions.deleteCustomer(customerId));
+    },
+    resetRequestDeleteCustomer: () => {
+      return dispatch(actions.deleteCustomerResetRequest());
     },
   };
 };

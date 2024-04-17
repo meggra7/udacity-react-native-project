@@ -16,6 +16,7 @@ interface CustomersReducerState {
   errorResetCustomers: string | null;
   isLoadingSaveCustomer: boolean;
   errorSaveCustomer: string | null;
+  isRequestedDeleteCustomer: boolean;
   isLoadingDeleteCustomer: boolean;
   errorDeleteCustomer: string | null;
 }
@@ -29,6 +30,7 @@ const slice = createSlice({
     errorResetCustomers: null,
     isLoadingSaveCustomer: false,
     errorSaveCustomer: null,
+    isRequestedDeleteCustomer: false,
     isLoadingDeleteCustomer: false,
     errorDeleteCustomer: null,
   } satisfies CustomersReducerState as CustomersReducerState,
@@ -70,6 +72,7 @@ const slice = createSlice({
       state.errorSaveCustomer = action.payload;
     },
     deleteCustomer: (state, action: PayloadAction<number>) => {
+      state.isRequestedDeleteCustomer = true;
       state.isLoadingDeleteCustomer = true;
       state.errorDeleteCustomer = null;
     },
@@ -78,8 +81,12 @@ const slice = createSlice({
       state.customers = action.payload;
     },
     deleteCustomerError: (state, action: PayloadAction<string>) => {
+      state.isRequestedDeleteCustomer = false;
       state.isLoadingDeleteCustomer = false;
       state.errorDeleteCustomer = action.payload;
+    },
+    deleteCustomerResetRequest: (state) => {
+      state.isRequestedDeleteCustomer = false;
     },
   },
 });
@@ -97,6 +104,7 @@ export const {
   deleteCustomer,
   deleteCustomerResult,
   deleteCustomerError,
+  deleteCustomerResetRequest,
 } = slice.actions;
 
 export default slice.reducer;
