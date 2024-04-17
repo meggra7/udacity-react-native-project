@@ -14,6 +14,7 @@ interface CustomersReducerState {
   errorSyncCustomers: string | null;
   isLoadingResetCustomers: boolean;
   errorResetCustomers: string | null;
+  isRequestedSaveCustomer: boolean;
   isLoadingSaveCustomer: boolean;
   errorSaveCustomer: string | null;
   isRequestedDeleteCustomer: boolean;
@@ -28,6 +29,7 @@ const slice = createSlice({
     errorSyncCustomers: null,
     isLoadingResetCustomers: false,
     errorResetCustomers: null,
+    isRequestedSaveCustomer: false,
     isLoadingSaveCustomer: false,
     errorSaveCustomer: null,
     isRequestedDeleteCustomer: false,
@@ -60,6 +62,7 @@ const slice = createSlice({
       state.errorResetCustomers = action.payload;
     },
     saveCustomer: (state, action: PayloadAction<Customer>) => {
+      state.isRequestedSaveCustomer = true;
       state.isLoadingSaveCustomer = true;
       state.errorSaveCustomer = null;
     },
@@ -68,8 +71,12 @@ const slice = createSlice({
       state.customers = action.payload;
     },
     saveCustomerError: (state, action: PayloadAction<string>) => {
+      state.isRequestedSaveCustomer = false;
       state.isLoadingSaveCustomer = false;
       state.errorSaveCustomer = action.payload;
+    },
+    saveCustomerResetRequest: (state) => {
+      state.isRequestedSaveCustomer = false;
     },
     deleteCustomer: (state, action: PayloadAction<number>) => {
       state.isRequestedDeleteCustomer = true;
@@ -101,6 +108,7 @@ export const {
   saveCustomer,
   saveCustomerResult,
   saveCustomerError,
+  saveCustomerResetRequest,
   deleteCustomer,
   deleteCustomerResult,
   deleteCustomerError,
