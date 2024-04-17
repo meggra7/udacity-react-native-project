@@ -41,9 +41,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  dropdownInput: {
-    fontFamily: "inherit",
-  },
   toggleInput: {
     justifyContent: "flex-end",
   },
@@ -187,19 +184,14 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Region:</Text>
-        <Dropdown
-          style={{
-            ...styles.input,
-            ...styles.dropdownInput,
-          }}
-        >
+        <Dropdown style={styles.input}>
           <Select
             value={regions[region]}
             selectedIndex={dropdownIndexPath as IndexPath}
             onSelect={(index) => setDropdownIndexPath(index as IndexPath)}
           >
-            {regions.map((region) => (
-              <SelectItem title={region} />
+            {regions.map((region, index) => (
+              <SelectItem title={region} key={`region-${index}`} />
             ))}
           </Select>
         </Dropdown>
