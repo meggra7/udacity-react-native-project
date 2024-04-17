@@ -12,6 +12,8 @@ import {
 import { useGetRegions } from "../store/hooks/useGetRegions";
 import { Customer } from "../store/reducers/customersReducer";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
+import { useNavigation } from "@react-navigation/native";
+import { Screen } from "../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -73,8 +75,14 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   onSave,
   error,
 }) => {
-  const { deleteCustomer, isLoadingDeleteCustomer, errorDeleteCustomer } =
-    useGetCustomersReducer();
+  const { navigate } = useNavigation();
+  const {
+    deleteCustomer,
+    isRequestedDeleteCustomer,
+    isLoadingDeleteCustomer,
+    errorDeleteCustomer,
+    resetRequestDeleteCustomer,
+  } = useGetCustomersReducer();
   const { regions } = useGetRegions();
   const [firstName, setFirstName] = React.useState(
     existingCustomer?.firstName ?? ""
@@ -95,6 +103,23 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
   }, [dropdownIndexPath.row]);
+
+  useEffect(() => {
+    if (
+      isRequestedDeleteCustomer &&
+      !isLoadingDeleteCustomer &&
+      !errorDeleteCustomer
+    ) {
+      // The requested deletion was successful. Clear the deletion request and go back to the customer list.
+      resetRequestDeleteCustomer();
+
+      existingCustomer
+        ? navigate(Screen.CustomerList, {
+            regionId: existingCustomer.region,
+          })
+        : navigate(Screen.RegionList);
+    }
+  }, [isRequestedDeleteCustomer, isLoadingDeleteCustomer, errorDeleteCustomer]);
 
   const showDeleteCustomerAlert = () => {
     Alert.alert(
@@ -199,15 +224,13 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         {canDelete && (
           <DangerousButton
             text="Delete"
-            onPress={() => showDeleteCustomerAlert()}
+            onPress={showDeleteCustomerAlert}
             disabled={disableButtons}
           />
         )}
       </View>
       {(error || errorDeleteCustomer) && (
-        <Text style={appStyles.errorText}>
-          {error ?? errorDeleteCustomer}
-        </Text>
+        <Text style={appStyles.errorText}>{error ?? errorDeleteCustomer}</Text>
       )}
     </View>
   );
