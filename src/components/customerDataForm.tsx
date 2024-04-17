@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
 
 interface CustomerDataFormProps {
   existingCustomer?: Customer;
+  regionIdForNewCustomer?: number;
   canDelete: boolean;
   isDisabled: boolean;
   onSave: (customer: Customer) => void;
@@ -70,6 +71,7 @@ interface CustomerDataFormProps {
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   existingCustomer,
+  regionIdForNewCustomer,
   canDelete,
   isDisabled,
   onSave,
@@ -90,7 +92,9 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   const [lastName, setLastName] = React.useState(
     existingCustomer?.lastName ?? ""
   );
-  const [region, setRegion] = React.useState(existingCustomer?.region ?? 0);
+  const [region, setRegion] = React.useState(
+    existingCustomer?.region ?? regionIdForNewCustomer ?? 0
+  );
   const [isActive, setIsActive] = React.useState(
     existingCustomer?.isActive ?? true
   );

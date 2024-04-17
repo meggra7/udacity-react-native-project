@@ -25,7 +25,7 @@ const AddCustomerButton: React.FC<AddCustomerButtonProps> = ({ regionId }) => {
   return (
     <PrimaryButton
       text={`Add ${regions[regionId]} Customer`}
-      onPress={() => navigate(Screen.AddCustomer)}
+      onPress={() => navigate(Screen.AddCustomer, { regionId })}
     />
   );
 };
