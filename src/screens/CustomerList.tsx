@@ -12,6 +12,40 @@ import { PrimaryButton } from "../components/buttons";
 import { Screen } from "../constants";
 import { RootStackParamList } from "../../App";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
+import { useGetRegions } from "../store/hooks/useGetRegions";
+
+interface AddCustomerButtonProps {
+  regionId: number;
+}
+
+const AddCustomerButton: React.FC<AddCustomerButtonProps> = ({ regionId }) => {
+  const { navigate } = useNavigation();
+  const { regions } = useGetRegions();
+
+  return (
+    <PrimaryButton
+      text={`Add ${regions[regionId]} Customer`}
+      onPress={() => navigate(Screen.AddCustomer)}
+    />
+  );
+};
+
+interface EmptyCustomerListViewProps {
+  regionId: number;
+}
+
+const EmptyCustomerListView: React.FC<EmptyCustomerListViewProps> = ({
+  regionId,
+}) => {
+  return (
+    <View>
+      <Text style={{ marginBottom: 8 }}>
+        No customers have been added for this region
+      </Text>
+      <AddCustomerButton regionId={regionId} />
+    </View>
+  );
+};
 
 interface CustomerListItemProps {
   id: number;
@@ -48,22 +82,6 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({
   );
 };
 
-const EmptyCustomerListView: React.FC = () => {
-  const { navigate } = useNavigation();
-
-  return (
-    <View>
-      <Text style={{ marginBottom: 8 }}>
-        No customers have been added for this region
-      </Text>
-      <PrimaryButton
-        text="Add Customer"
-        onPress={() => navigate(Screen.AddCustomer)}
-      />
-    </View>
-  );
-};
-
 export const CustomerList: React.FC = () => {
   const { params } = useRoute<RouteProp<RootStackParamList, "CustomerList">>();
   const { customers } = useGetCustomersReducer();
@@ -84,7 +102,7 @@ export const CustomerList: React.FC = () => {
   if (customersForRegion?.length === 0) {
     return (
       <View style={appStyles.container}>
-        <EmptyCustomerListView />
+        <EmptyCustomerListView regionId={regionId} />
       </View>
     );
   }
@@ -110,6 +128,7 @@ export const CustomerList: React.FC = () => {
           </View>
         ))}
       </ScrollView>
+      <AddCustomerButton regionId={regionId} />
     </View>
   );
 };
