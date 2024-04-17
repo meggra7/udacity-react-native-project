@@ -64,21 +64,18 @@ interface CustomerDataFormProps {
   existingCustomer?: Customer;
   regionIdForNewCustomer?: number;
   canDelete: boolean;
-  isDisabled: boolean;
-  onSave: (customer: Customer) => void;
-  error: string | null;
 }
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   existingCustomer,
   regionIdForNewCustomer,
   canDelete,
-  isDisabled,
-  onSave,
-  error,
 }) => {
   const { navigate, goBack } = useNavigation();
   const {
+    saveCustomer,
+    isLoadingSaveCustomer,
+    errorSaveCustomer,
     deleteCustomer,
     isRequestedDeleteCustomer,
     isLoadingDeleteCustomer,
@@ -102,7 +99,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
     new IndexPath(region)
   );
 
-  const disableButtons = isDisabled || isLoadingDeleteCustomer;
+  const disableButtons = isLoadingSaveCustomer || isLoadingDeleteCustomer;
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
@@ -207,7 +204,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
           <PrimaryButton
             text="Save"
             onPress={() =>
-              onSave({
+              saveCustomer({
                 firstName,
                 lastName,
                 region,
@@ -231,8 +228,10 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
           />
         )}
       </View>
-      {(error || errorDeleteCustomer) && (
-        <Text style={appStyles.errorText}>{error ?? errorDeleteCustomer}</Text>
+      {(errorSaveCustomer || errorDeleteCustomer) && (
+        <Text style={appStyles.errorText}>
+          {errorSaveCustomer ?? errorDeleteCustomer}
+        </Text>
       )}
     </View>
   );
