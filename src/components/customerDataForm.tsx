@@ -77,7 +77,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   onSave,
   error,
 }) => {
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
   const {
     deleteCustomer,
     isRequestedDeleteCustomer,
@@ -219,9 +219,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
           />
           <SecondaryButton
             text="Cancel"
-            onPress={() => {
-              console.log("Canceling edits");
-            }}
+            onPress={goBack}
             disabled={disableButtons}
           />
         </View>
