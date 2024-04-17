@@ -74,8 +74,10 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   const { navigate, goBack } = useNavigation();
   const {
     saveCustomer,
+    isRequestedSaveCustomer,
     isLoadingSaveCustomer,
     errorSaveCustomer,
+    resetRequestSaveCustomer,
     deleteCustomer,
     isRequestedDeleteCustomer,
     isLoadingDeleteCustomer,
@@ -101,9 +103,29 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
 
   const disableButtons = isLoadingSaveCustomer || isLoadingDeleteCustomer;
 
+  const customerToSave: Customer = {
+    firstName,
+    lastName,
+    region,
+    isActive,
+    id: existingCustomer?.id,
+  };
+
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
   }, [dropdownIndexPath.row]);
+
+  useEffect(() => {
+    if (
+      isRequestedSaveCustomer &&
+      !isLoadingSaveCustomer &&
+      !errorSaveCustomer
+    ) {
+      // The requested save was successful. Clear the save request and go back to the customer list.
+      resetRequestSaveCustomer();
+      navigate(Screen.CustomerList, { regionId: customerToSave.region });
+    }
+  }, [isRequestedSaveCustomer, isLoadingSaveCustomer, errorSaveCustomer]);
 
   useEffect(() => {
     if (
@@ -203,15 +225,7 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         <View style={{ flexDirection: "row" }}>
           <PrimaryButton
             text="Save"
-            onPress={() =>
-              saveCustomer({
-                firstName,
-                lastName,
-                region,
-                isActive,
-                id: existingCustomer?.id,
-              })
-            }
+            onPress={() => saveCustomer(customerToSave)}
             disabled={disableButtons}
           />
           <SecondaryButton
