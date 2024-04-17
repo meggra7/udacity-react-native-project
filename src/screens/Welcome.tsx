@@ -40,44 +40,25 @@ export const Welcome: React.FC = () => {
   };
 
   return (
-    <View
-      style={{
-        ...appStyles.container,
-        justifyContent: "space-between",
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ marginBottom: 8 }}>
-          Select an option below to continue
-        </Text>
-        <PrimaryButton
-          text="View customers by region"
-          onPress={() => navigate(Screen.RegionList)}
-        />
-        <PrimaryButton
-          text="Add new customer"
-          onPress={() => navigate(Screen.AddCustomer)}
-        />
-      </View>
-
+    <View style={appStyles.container}>
+      <Text style={{ marginBottom: 8 }}>
+        Select an option below to continue
+      </Text>
+      <PrimaryButton
+        text="View customers by region"
+        onPress={() => navigate(Screen.RegionList)}
+      />
+      <DangerousButton
+        text="Clear all customer data"
+        onPress={showClearCustomerDataAlert}
+        disabled={isLoadingResetCustomers}
+      />
       {errorResetCustomers && (
         <Text style={appStyles.errorText}>
           We're sorry, there was an error clearing the customer data. Please try
           again later.
         </Text>
       )}
-      <DangerousButton
-        text="Clear all customer data"
-        onPress={showClearCustomerDataAlert}
-        disabled={isLoadingResetCustomers}
-      />
     </View>
   );
 };

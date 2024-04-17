@@ -47,18 +47,6 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 
 ## Task breakdown
 
-### Confirm all navigation works as expected
-
-#### Description
-
-This task is to primarily ensure that all navigation nuances are wired up correctly.
-
-#### Acceptance criteria
-
-- Upon successfully adding or editing a customer, navigate to the view customer page for that customer that will navigate back to the region for that customer
-- Upon successfully deleting a customer, navigate to the customer list for that customer's region
-- Upon clicking to add a customer from a specific region list, pass in the region id to pre-populate the region
-
 ### Implement push notifications
 
 #### Description

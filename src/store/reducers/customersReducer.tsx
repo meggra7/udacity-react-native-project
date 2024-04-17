@@ -14,8 +14,10 @@ interface CustomersReducerState {
   errorSyncCustomers: string | null;
   isLoadingResetCustomers: boolean;
   errorResetCustomers: string | null;
+  isRequestedSaveCustomer: boolean;
   isLoadingSaveCustomer: boolean;
   errorSaveCustomer: string | null;
+  isRequestedDeleteCustomer: boolean;
   isLoadingDeleteCustomer: boolean;
   errorDeleteCustomer: string | null;
 }
@@ -27,8 +29,10 @@ const slice = createSlice({
     errorSyncCustomers: null,
     isLoadingResetCustomers: false,
     errorResetCustomers: null,
+    isRequestedSaveCustomer: false,
     isLoadingSaveCustomer: false,
     errorSaveCustomer: null,
+    isRequestedDeleteCustomer: false,
     isLoadingDeleteCustomer: false,
     errorDeleteCustomer: null,
   } satisfies CustomersReducerState as CustomersReducerState,
@@ -58,6 +62,7 @@ const slice = createSlice({
       state.errorResetCustomers = action.payload;
     },
     saveCustomer: (state, action: PayloadAction<Customer>) => {
+      state.isRequestedSaveCustomer = true;
       state.isLoadingSaveCustomer = true;
       state.errorSaveCustomer = null;
     },
@@ -66,10 +71,15 @@ const slice = createSlice({
       state.customers = action.payload;
     },
     saveCustomerError: (state, action: PayloadAction<string>) => {
+      state.isRequestedSaveCustomer = false;
       state.isLoadingSaveCustomer = false;
       state.errorSaveCustomer = action.payload;
     },
+    saveCustomerResetRequest: (state) => {
+      state.isRequestedSaveCustomer = false;
+    },
     deleteCustomer: (state, action: PayloadAction<number>) => {
+      state.isRequestedDeleteCustomer = true;
       state.isLoadingDeleteCustomer = true;
       state.errorDeleteCustomer = null;
     },
@@ -78,8 +88,12 @@ const slice = createSlice({
       state.customers = action.payload;
     },
     deleteCustomerError: (state, action: PayloadAction<string>) => {
+      state.isRequestedDeleteCustomer = false;
       state.isLoadingDeleteCustomer = false;
       state.errorDeleteCustomer = action.payload;
+    },
+    deleteCustomerResetRequest: (state) => {
+      state.isRequestedDeleteCustomer = false;
     },
   },
 });
@@ -94,9 +108,11 @@ export const {
   saveCustomer,
   saveCustomerResult,
   saveCustomerError,
+  saveCustomerResetRequest,
   deleteCustomer,
   deleteCustomerResult,
   deleteCustomerError,
+  deleteCustomerResetRequest,
 } = slice.actions;
 
 export default slice.reducer;

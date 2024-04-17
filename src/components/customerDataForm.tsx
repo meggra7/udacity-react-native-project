@@ -12,6 +12,8 @@ import {
 import { useGetRegions } from "../store/hooks/useGetRegions";
 import { Customer } from "../store/reducers/customersReducer";
 import { useGetCustomersReducer } from "../store/hooks/useGetCustomersReducer";
+import { useNavigation } from "@react-navigation/native";
+import { Screen } from "../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -39,9 +41,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  dropdownInput: {
-    fontFamily: "inherit",
-  },
   toggleInput: {
     justifyContent: "flex-end",
   },
@@ -60,21 +59,28 @@ const styles = StyleSheet.create({
 
 interface CustomerDataFormProps {
   existingCustomer?: Customer;
+  regionIdForNewCustomer?: number;
   canDelete: boolean;
-  isDisabled: boolean;
-  onSave: (customer: Customer) => void;
-  error: string | null;
 }
 
 export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   existingCustomer,
+  regionIdForNewCustomer,
   canDelete,
-  isDisabled,
-  onSave,
-  error,
 }) => {
-  const { deleteCustomer, isLoadingDeleteCustomer, errorDeleteCustomer } =
-    useGetCustomersReducer();
+  const { navigate, goBack } = useNavigation();
+  const {
+    saveCustomer,
+    isRequestedSaveCustomer,
+    isLoadingSaveCustomer,
+    errorSaveCustomer,
+    resetRequestSaveCustomer,
+    deleteCustomer,
+    isRequestedDeleteCustomer,
+    isLoadingDeleteCustomer,
+    errorDeleteCustomer,
+    resetRequestDeleteCustomer,
+  } = useGetCustomersReducer();
   const { regions } = useGetRegions();
   const [firstName, setFirstName] = React.useState(
     existingCustomer?.firstName ?? ""
@@ -82,7 +88,9 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
   const [lastName, setLastName] = React.useState(
     existingCustomer?.lastName ?? ""
   );
-  const [region, setRegion] = React.useState(existingCustomer?.region ?? 0);
+  const [region, setRegion] = React.useState(
+    existingCustomer?.region ?? regionIdForNewCustomer ?? 0
+  );
   const [isActive, setIsActive] = React.useState(
     existingCustomer?.isActive ?? true
   );
@@ -90,11 +98,48 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
     new IndexPath(region)
   );
 
-  const disableButtons = isDisabled || isLoadingDeleteCustomer;
+  const disableButtons = isLoadingSaveCustomer || isLoadingDeleteCustomer;
+
+  const customerToSave: Customer = {
+    firstName,
+    lastName,
+    region,
+    isActive,
+    id: existingCustomer?.id,
+  };
 
   useEffect(() => {
     setRegion(dropdownIndexPath.row);
   }, [dropdownIndexPath.row]);
+
+  useEffect(() => {
+    if (
+      isRequestedSaveCustomer &&
+      !isLoadingSaveCustomer &&
+      !errorSaveCustomer
+    ) {
+      // The requested save was successful. Clear the save request and go back to the customer list.
+      resetRequestSaveCustomer();
+      navigate(Screen.CustomerList, { regionId: customerToSave.region });
+    }
+  }, [isRequestedSaveCustomer, isLoadingSaveCustomer, errorSaveCustomer]);
+
+  useEffect(() => {
+    if (
+      isRequestedDeleteCustomer &&
+      !isLoadingDeleteCustomer &&
+      !errorDeleteCustomer
+    ) {
+      // The requested deletion was successful. Clear the deletion request and go back to the customer list.
+      resetRequestDeleteCustomer();
+
+      existingCustomer
+        ? navigate(Screen.CustomerList, {
+            regionId: existingCustomer.region,
+          })
+        : navigate(Screen.RegionList);
+    }
+  }, [isRequestedDeleteCustomer, isLoadingDeleteCustomer, errorDeleteCustomer]);
 
   const showDeleteCustomerAlert = () => {
     Alert.alert(
@@ -139,19 +184,14 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Region:</Text>
-        <Dropdown
-          style={{
-            ...styles.input,
-            ...styles.dropdownInput,
-          }}
-        >
+        <Dropdown style={styles.input}>
           <Select
             value={regions[region]}
             selectedIndex={dropdownIndexPath as IndexPath}
             onSelect={(index) => setDropdownIndexPath(index as IndexPath)}
           >
-            {regions.map((region) => (
-              <SelectItem title={region} />
+            {regions.map((region, index) => (
+              <SelectItem title={region} key={`region-${index}`} />
             ))}
           </Select>
         </Dropdown>
@@ -177,36 +217,26 @@ export const CustomerDataForm: React.FC<CustomerDataFormProps> = ({
         <View style={{ flexDirection: "row" }}>
           <PrimaryButton
             text="Save"
-            onPress={() =>
-              onSave({
-                firstName,
-                lastName,
-                region,
-                isActive,
-                id: existingCustomer?.id,
-              })
-            }
+            onPress={() => saveCustomer(customerToSave)}
             disabled={disableButtons}
           />
           <SecondaryButton
             text="Cancel"
-            onPress={() => {
-              console.log("Canceling edits");
-            }}
+            onPress={goBack}
             disabled={disableButtons}
           />
         </View>
         {canDelete && (
           <DangerousButton
             text="Delete"
-            onPress={() => showDeleteCustomerAlert()}
+            onPress={showDeleteCustomerAlert}
             disabled={disableButtons}
           />
         )}
       </View>
-      {(error || errorDeleteCustomer) && (
+      {(errorSaveCustomer || errorDeleteCustomer) && (
         <Text style={appStyles.errorText}>
-          {error ?? errorDeleteCustomer}
+          {errorSaveCustomer ?? errorDeleteCustomer}
         </Text>
       )}
     </View>

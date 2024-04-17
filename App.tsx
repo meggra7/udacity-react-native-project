@@ -21,7 +21,7 @@ export type RootStackParamList = {
   CustomerList: { regionId: number };
   ViewCustomer: { customerId: number };
   EditCustomer: { customer: Customer };
-  AddCustomer: undefined;
+  AddCustomer: { regionId: number };
 };
 
 // Per documentation https://reactnavigation.org/docs/typescript/#specifying-default-types-for-usenavigation-link-ref-etc
