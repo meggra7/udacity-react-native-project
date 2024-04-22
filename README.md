@@ -44,15 +44,3 @@ This project is completed as part of Udacity's [React Native](https://www.udacit
 >   - _Contains a link to edit the customer information_
 > - _Customer create/edit form_
 >   - _This view will hold a form for either creating or editing a user, depending on the parameters sent to the page"_
-
-## Task breakdown
-
-### Implement push notifications
-
-#### Description
-
-Implement a local push notification that will remind the user to contact the customer.
-
-#### Acceptance criteria
-
-- Upon tapping the notification option in the view customer screen, if the user then closes the app so that it is in the background, they should receive a reminder notification 15 seconds later to contact the customer. (The short time span is for demonstration purposes only.)

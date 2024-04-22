@@ -13,6 +13,7 @@ import { EditCustomer } from "./src/screens/EditCustomer";
 import { AddCustomer } from "./src/screens/AddCustomer";
 import { Screen } from "./src/constants";
 import { Customer } from "./src/store/reducers/customersReducer";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 // Per documentation https://reactnavigation.org/docs/typescript/#type-checking-the-navigator
 export type RootStackParamList = {
@@ -37,40 +38,42 @@ export default function App() {
   return (
     <Provider store={store}>
       <ApplicationProvider {...eva} theme={eva.light}>
-        <NavigationContainer>
-          <RootStack.Navigator initialRouteName={Screen.Welcome}>
-            <RootStack.Screen
-              name={Screen.Welcome}
-              component={Welcome}
-              options={{ title: "Welcome" }}
-            />
-            <RootStack.Screen
-              name={Screen.RegionList}
-              component={RegionList}
-              options={{ title: "Regions" }}
-            />
-            <RootStack.Screen
-              name={Screen.CustomerList}
-              component={CustomerList}
-              options={{ title: "Customers" }}
-            />
-            <RootStack.Screen
-              name={Screen.ViewCustomer}
-              component={ViewCustomer}
-              options={{ title: "View Customer" }}
-            />
-            <RootStack.Screen
-              name={Screen.EditCustomer}
-              component={EditCustomer}
-              options={{ title: "Edit Customer" }}
-            />
-            <RootStack.Screen
-              name={Screen.AddCustomer}
-              component={AddCustomer}
-              options={{ title: "Add Customer" }}
-            />
-          </RootStack.Navigator>
-        </NavigationContainer>
+        <RootSiblingParent>
+          <NavigationContainer>
+            <RootStack.Navigator initialRouteName={Screen.Welcome}>
+              <RootStack.Screen
+                name={Screen.Welcome}
+                component={Welcome}
+                options={{ title: "Welcome" }}
+              />
+              <RootStack.Screen
+                name={Screen.RegionList}
+                component={RegionList}
+                options={{ title: "Regions" }}
+              />
+              <RootStack.Screen
+                name={Screen.CustomerList}
+                component={CustomerList}
+                options={{ title: "Customers" }}
+              />
+              <RootStack.Screen
+                name={Screen.ViewCustomer}
+                component={ViewCustomer}
+                options={{ title: "View Customer" }}
+              />
+              <RootStack.Screen
+                name={Screen.EditCustomer}
+                component={EditCustomer}
+                options={{ title: "Edit Customer" }}
+              />
+              <RootStack.Screen
+                name={Screen.AddCustomer}
+                component={AddCustomer}
+                options={{ title: "Add Customer" }}
+              />
+            </RootStack.Navigator>
+          </NavigationContainer>
+        </RootSiblingParent>
       </ApplicationProvider>
     </Provider>
   );
