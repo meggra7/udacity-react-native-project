@@ -80,24 +80,11 @@ export const ViewCustomer: React.FC = () => {
 
   requestNotificationsPermissions();
 
-  if (!params || !regions || !customers) {
-    return (
-      <View style={appStyles.loadingIndicator}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
-  if (!selectedCustomer) {
-    return (
-      <View style={appStyles.container}>
-        <Text>
-          We're sorry, we're having trouble finding this customer. Please try
-          again later.
-        </Text>
-      </View>
-    );
-  }
+  useEffect(() => {
+    const listener =
+      Notifications.addNotificationReceivedListener(handleNotification);
+    return () => listener.remove();
+  }, []);
 
   const viewCustomerStyles = StyleSheet.create({
     container: {
@@ -120,11 +107,24 @@ export const ViewCustomer: React.FC = () => {
     },
   });
 
-  useEffect(() => {
-    const listener =
-      Notifications.addNotificationReceivedListener(handleNotification);
-    return () => listener.remove();
-  }, []);
+  if (!params || !regions || !customers) {
+    return (
+      <View style={appStyles.loadingIndicator}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (!selectedCustomer) {
+    return (
+      <View style={appStyles.container}>
+        <Text>
+          We're sorry, we're having trouble finding this customer. Please try
+          again later.
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={viewCustomerStyles.container}>
